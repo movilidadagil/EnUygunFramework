@@ -15,7 +15,7 @@ public class Hooks {
     @Before
     public void before() {
         properties = ConfigReader.initialize_Properties();
-        driver = DriverSetup.initialize_Driver("chrome");
+        driver = DriverSetup.initialize_Driver(properties.getProperty("browser"));
     }
 
     @After

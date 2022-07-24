@@ -15,7 +15,7 @@ public class LoginPage {
     WebDriverWait wait;
     Helper elementHelper;
 
-    //elements in basket page
+    //elements in login page
     By login_LoginButton= By.id("ctx-LoginBtn");
     By login_EmailInput=By.cssSelector("[name=email]");
     By login_PasswordInput=By.cssSelector("[name=password]");
