@@ -17,9 +17,9 @@ public class HomePage {
     //WebDriver setups
     WebDriver driver;
     Helper elementHelper;
-    By fromForFlightSearch= By.id("react-autowhatever-OriginInput");
+    By gdpr = By.cssSelector("#CookieAlert button");
+    By fromForFlightSearch= By.id("OriginInput");
     By fromListForFlightSearch=By.xpath("//*/ul[@role='listbox']/li");
-
     //login page constructor
     public HomePage(WebDriver driver)
     {
@@ -30,6 +30,13 @@ public class HomePage {
     public void searchForFlightTicket(String kw) throws InterruptedException {
         WebElement flightSearch =  this.elementHelper
                 .findElement(fromForFlightSearch);
+        if(elementHelper.findElement(gdpr).isEnabled()){
+            System.out.println("if inthe sparta");
+            elementHelper.findElement(gdpr).click();
+        }
+        else{
+            System.out.println("what happened ezberci mertcan");
+        }
         this.elementHelper.typeForInput(kw,flightSearch);
 
 

@@ -24,11 +24,13 @@ public class Helper {
 
     public WebElement findElement(By elementName)
     {
+        wait.until(ExpectedConditions.elementToBeClickable(elementName));
         return driver.findElement(elementName);
     }
 
     public List<WebElement> findElements(By elementName)
     {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(elementName));
         return driver.findElements(elementName);
     }
 

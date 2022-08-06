@@ -5,6 +5,8 @@ import api.FlightTicketRequest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import framework.ConfigReader;
 import framework.DriverSetup;
+import model.Root;
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeClass;
@@ -12,9 +14,7 @@ import org.testng.annotations.Test;
 import pages.HomePage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class FlightAndBusSearchScenarios {
 
@@ -22,6 +22,7 @@ public class FlightAndBusSearchScenarios {
     static Properties properties;
     HomePage homePage;
     FlightTicketRequest flightTicketRequest;
+    String keyword = "ada";
 
     @BeforeClass
     public void setup(){
@@ -34,17 +35,45 @@ public class FlightAndBusSearchScenarios {
 
     @Test(priority = 1)
     public void searchForKeyword() throws InterruptedException {
-        String keyword = "ada";
 
         homePage.searchForFlightTicket(keyword);
-        System.out.println("test success");
 
     }
-    @Test(priority = 2, enabled = false)
+    @Test(priority = 2)
     public void checkListForSearch() throws UnirestException, IOException {
-        List< String > flightList = homePage.listForFlightTicketSearchByStream();
-        List< String > flightListApi = flightTicketRequest.flightTicketFromList();
+        Map<String, Root> flightMap = new HashMap();
+        Map<String, Root> flightMapAPi = new HashMap();
 
+        List< String > flightList = homePage.listForFlightTicketSearchByStream();
+        /*flightList.stream().forEach(item->{
+            System.out.println(item);
+        });*/
+        for(int i=2;i<flightList.size();i=i+2){
+            Root root = new Root();
+            root.setAirport(flightList.get(i-1).split("\n")[1]);
+            root.setCity_name(flightList.get(i-2).split(",")[0]);
+            root.setCountry_name(flightList.get(i-2).split(",")[1].split("\n")[0]);
+            flightMap.put(flightList.get(i).split("\n")[2],
+                    root);
+        }
+
+
+        List< String > flightListApi = flightTicketRequest.flightTicketFromList(keyword);
+        flightListApi.stream().forEach(item->{
+          //  System.out.println(item);
+        });
+
+        for(int i=0;i<flightListApi.size();i++){
+            Root root = new Root();
+            //IZM,Türkiye:Adnan Menderes Havalimanı:İzmir
+            root.setAirport(flightListApi.get(i));
+            root.setCountry_name(flightListApi.get(i).split(":")[0]);
+            root.setAirport(flightListApi.get(i).split(":")[1]);
+            root.setCity_name(flightListApi.get(i).split(":")[2]);
+            flightMapAPi.put(flightListApi.get(i).split(",")[0],
+                    root);
+        }
+        Assert.assertEquals(flightMap.get("ADT"),flightMapAPi.get("ADT"));
     }
 
 }
