@@ -11,6 +11,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.testng.asserts.Assertion;
+import org.testng.asserts.SoftAssert;
 import pages.HomePage;
 
 import java.io.IOException;
@@ -33,13 +35,13 @@ public class FlightAndBusSearchScenarios {
 
     }
 
-    @Test(priority = 1)
+    @Test(priority = 1, enabled = false)
     public void searchForKeyword() throws InterruptedException {
 
         homePage.searchForFlightTicket(keyword);
 
     }
-    @Test(priority = 2)
+    @Test(priority = 2, enabled = false)
     public void checkListForSearch() throws UnirestException, IOException {
         Map<String, Root> flightMap = new HashMap();
         Map<String, Root> flightMapAPi = new HashMap();
@@ -74,6 +76,16 @@ public class FlightAndBusSearchScenarios {
                     root);
         }
         Assert.assertEquals(flightMap.get("ADT"),flightMapAPi.get("ADT"));
+
+    }
+
+    @Test
+    public void verifySoftAssertion(){
+        Assertion assertion = new SoftAssert();
+        assertion.assertEquals("a","b");
+        System.out.println("bu okunur");
+        Assert.assertEquals("a","b");
+        System.out.println("bu okunmaz");
     }
 
 }

@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class HomePage {
@@ -30,13 +31,16 @@ public class HomePage {
     public void searchForFlightTicket(String kw) throws InterruptedException {
         WebElement flightSearch =  this.elementHelper
                 .findElement(fromForFlightSearch);
-        if(elementHelper.findElement(gdpr).isEnabled()){
-            System.out.println("if inthe sparta");
-            elementHelper.findElement(gdpr).click();
+        try{
+                elementHelper.findElement(gdpr).isEnabled();
+                System.out.println("if inthe sparta");
+                elementHelper.findElement(gdpr).click();
+
+        }catch (NoSuchElementException e){
+            System.out.println("gdpr is not visible");
         }
-        else{
-            System.out.println("what happened ezberci mertcan");
-        }
+
+
         this.elementHelper.typeForInput(kw,flightSearch);
 
 
