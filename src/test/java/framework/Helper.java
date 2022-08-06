@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -23,6 +25,11 @@ public class Helper {
     public WebElement findElement(By elementName)
     {
         return driver.findElement(elementName);
+    }
+
+    public List<WebElement> findElements(By elementName)
+    {
+        return driver.findElements(elementName);
     }
 
     public void click(By elementName)
