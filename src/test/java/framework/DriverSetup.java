@@ -20,6 +20,7 @@ public class DriverSetup {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-blink-features=AutomationControlled"); //removes the detection
         options.addArguments("--disable-notifications");
+        options.setExperimentalOption("excludeSwitches", "disable-popup-blocking");
         options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"}); //removes the banner
         properties = ConfigReader.getProperties();
         if (browser.equals("Chrome")) {
@@ -30,7 +31,7 @@ public class DriverSetup {
             driver = new FirefoxDriver();
         } else {
             WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
+            driver = new ChromeDriver(options);
         }
         String url = properties.getProperty("url");
         int impWait = Integer.parseInt(properties.getProperty("implicityWait"));

@@ -34,6 +34,7 @@ public class Helper {
 
     public void click(By elementName)
     {
+
         findElement(elementName).click();
     }
 
@@ -58,6 +59,22 @@ public class Helper {
         String actualText= findElement(actualValue).getText();
         assertEquals(actualText,exceptedValue);
 
+    }
+
+    public void typeForInput(String kw, WebElement element){
+        wait.until(ExpectedConditions.visibilityOf(element));
+        assertEquals(element.getTagName(),"input");
+        element.sendKeys(kw);
+    }
+
+    public void clickForWebElement(WebElement element){
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+        element.click();
+    }
+
+    public void clickForWebElementWithWait(WebElement element, int timeout){
+        this.wait=new WebDriverWait(driver,timeout);
+        element.click();
     }
 
 }

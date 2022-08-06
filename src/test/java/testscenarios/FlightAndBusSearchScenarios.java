@@ -29,20 +29,22 @@ public class FlightAndBusSearchScenarios {
           driver = DriverSetup.initialize_Driver("chrome");
           homePage = new HomePage(driver);
           flightTicketRequest = new FlightTicketRequest();
+
     }
 
     @Test(priority = 1)
-    public void searchForKeyword(){
+    public void searchForKeyword() throws InterruptedException {
         String keyword = "ada";
 
         homePage.searchForFlightTicket(keyword);
         System.out.println("test success");
 
     }
-    @Test(priority = 2)
+    @Test(priority = 2, enabled = false)
     public void checkListForSearch() throws UnirestException, IOException {
-        List<String > flightList = homePage.listForFlightTicketSearchByStream();
-        flightTicketRequest.flightTicketFromList();
+        List< String > flightList = homePage.listForFlightTicketSearchByStream();
+        List< String > flightListApi = flightTicketRequest.flightTicketFromList();
+
     }
 
 }

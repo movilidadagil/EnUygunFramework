@@ -1,9 +1,11 @@
 package pages;
 
 import framework.Helper;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
@@ -14,7 +16,6 @@ public class HomePage {
 
     //WebDriver setups
     WebDriver driver;
-    WebDriverWait wait;
     Helper elementHelper;
     By fromForFlightSearch= By.id("react-autowhatever-OriginInput");
     By fromListForFlightSearch=By.xpath("//*/ul[@role='listbox']/li");
@@ -23,13 +24,15 @@ public class HomePage {
     public HomePage(WebDriver driver)
     {
         this.driver=driver;
-        this.wait=new WebDriverWait(driver,10);
         this.elementHelper=new Helper(driver);
     }
 
-    public void searchForFlightTicket(String kw){
-        this.elementHelper
-                .findElement(fromForFlightSearch).sendKeys(kw);
+    public void searchForFlightTicket(String kw) throws InterruptedException {
+        WebElement flightSearch =  this.elementHelper
+                .findElement(fromForFlightSearch);
+        this.elementHelper.typeForInput(kw,flightSearch);
+
+
     }
 
     public List<String> listForFlightTicketSearchByStream(){
